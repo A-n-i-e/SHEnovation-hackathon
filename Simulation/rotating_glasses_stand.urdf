@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<robot name="stand_with_glasses">
+  <!-- Base -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="1.0"/>
+      </geometry>
+      <origin xyz="0 0 0.5" rpy="0 0 0"/> <!-- Half of 1.0 so it's grounded -->
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Glasses holder -->
+  <link name="glasses_holder">
+    <visual>
+      <geometry>
+        <box size="0.3 0.05 0.02"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="green">
+        <color rgba="0 1 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Camera link on top -->
+  <link name="camera_link">
+    <visual>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Joint from base to glasses holder -->
+  <joint name="rotate_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="glasses_holder"/>
+    <origin xyz="0 0 1.0" rpy="0 0 0"/> <!-- Top of 1.0m cylinder -->
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="1" velocity="1"/>
+  </joint>
+
+  <!-- Fixed joint from glasses to camera -->
+  <joint name="camera_fixed" type="fixed">
+    <parent link="glasses_holder"/>
+    <child link="camera_link"/>
+    <origin xyz="0 0 0.03" rpy="0 0 1.5708"/>
+  </joint>
+</robot>

@@ -2,6 +2,8 @@ import os
 import google.generativeai as genai
 from PIL import Image
 from dotenv import load_dotenv
+import pyttsx3
+
 # import sys
 
 def configure_gemini():
@@ -29,6 +31,7 @@ def perform_ocr(image, prompt):
     
 
 image = "poem 2.jpg"
+image_2 = "uploads\IMG_9720.jpeg"
 image = Image.open(image)
 print
 prompt = """Perform Optical Character Recognition (OCR) on the provided image.
@@ -44,3 +47,14 @@ result = perform_ocr(image, prompt)
 print("Extracted Text:")
 print(result)
 print("-----------------")
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')       # getting details of current voice
+#engine.setProperty('voice', voices[0].id)  # changing index, changes voices. o for male
+engine.setProperty('voice', voices[1].id)
+engine.say(result)
+print("Speaking....")
+
+engine.runAndWait()
+
+
